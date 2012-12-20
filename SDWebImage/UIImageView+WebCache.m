@@ -8,6 +8,7 @@
 
 #import "UIImageView+WebCache.h"
 #import "objc/runtime.h"
+#import <QuartzCore/QuartzCore.h>
 
 static char operationKey;
 
@@ -58,8 +59,16 @@ static char operationKey;
             if (!sself) return;
             if (image)
             {
+                
                 sself.image = image;
                 [sself setNeedsLayout];
+                
+                CATransition *animation = [CATransition animation];
+                [animation setDuration:0.2];
+                [animation setType:kCATransitionFade];
+                [animation setSubtype:kCATransitionFade];
+                
+                [[sself layer] addAnimation:animation forKey:@"DisplayView"];
             }
             if (completedBlock && finished)
             {
@@ -80,5 +89,6 @@ static char operationKey;
         objc_setAssociatedObject(self, &operationKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
 }
+
 
 @end
