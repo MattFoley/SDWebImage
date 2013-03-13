@@ -47,7 +47,12 @@ static char operationKey;
 - (void)setImageForURL:(NSString *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock;
 {
     [self cancelCurrentImageLoad];
-    NSURL* urlObj = [NSURL URLWithString:url];
+    NSURL* urlObj;
+    if ([url isKindOfClass:[NSString class]]) {
+     urlObj = [NSURL URLWithString:url];
+    }else{
+        urlObj = (NSURL*)url;
+    }
     self.image = placeholder;
     
     if (urlObj)
