@@ -30,7 +30,7 @@
                                                                                target:self
                                                                                action:@selector(flushCache)];
         _objects = [NSArray arrayWithObjects:
-                    @"http://static2.dmcdn.net/static/video/451/838/44838154:jpeg_preview_small.jpg?20120509163826",
+                    @"http://assets.sbnation.com/assets/2512203/dogflops.gif",
                     @"http://static2.dmcdn.net/static/video/656/177/44771656:jpeg_preview_small.jpg?20120509154705",
                     @"http://static2.dmcdn.net/static/video/629/228/44822926:jpeg_preview_small.jpg?20120509181018",
                     @"http://static2.dmcdn.net/static/video/116/367/44763611:jpeg_preview_small.jpg?20120509101749",
@@ -332,6 +332,8 @@
                     @"http://static2.dmcdn.net/static/video/269/938/51839962:jpeg_preview_small.jpg?20121105214014",
                     nil];
     }
+    [SDWebImageManager.sharedManager.imageDownloader setValue:@"SDWebImage Demo" forHTTPHeaderField:@"AppName"];
+    SDWebImageManager.sharedManager.imageDownloader.executionOrder = SDWebImageDownloaderLIFOExecutionOrder;
     return self;
 }
 
@@ -369,8 +371,9 @@
     }
 
     cell.textLabel.text = [NSString stringWithFormat:@"Image #%d", indexPath.row];
+    cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
     [cell.imageView setImageWithURL:[NSURL URLWithString:[_objects objectAtIndex:indexPath.row]]
-                   placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                   placeholderImage:[UIImage imageNamed:@"placeholder"] options:indexPath.row == 0 ? SDWebImageRefreshCached : 0];
     return cell;
 }
 
