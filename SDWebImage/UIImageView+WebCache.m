@@ -95,5 +95,9 @@ static char operationKey;
     }
 }
 
+- (BOOL)isAnimatedGIF
+{
+    return (self.image.images != nil);
+}
 
 @end
